@@ -138,6 +138,11 @@ export function createGame () {
 
   function removeFruit({ fruitId }) {
     delete state.fruits[fruitId]
+
+    notifyAll({
+      type: 'remove-fruit',
+      fruitId
+    })
   }
 
   return {
