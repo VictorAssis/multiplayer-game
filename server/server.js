@@ -11,6 +11,11 @@ app.use(express.static('../client'))
 
 const game = createGame()
 
+game.subscribe((command) => {
+  console.log(`> Emitting ${command.type}`)
+  sockets.emit(command.type, command)
+})
+
 sockets.on('connection', (socket) => {
   const playerId = socket.id
   console.log(`> Player connected on Server with id: ${playerId}`)

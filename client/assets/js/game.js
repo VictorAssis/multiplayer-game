@@ -8,6 +8,18 @@ export function createGame () {
     }
   }
 
+  const observers = []
+
+  function subscribe (observerFunction) {
+    observers.push(observerFunction)
+  }
+
+  function notifyAll (command) {
+    for (const observerFunction of observers) {
+      observerFunction(command)
+    }
+  }
+
   function setState (newState) {
     Object.assign(state, newState)
   }
@@ -26,10 +38,22 @@ export function createGame () {
        x,
        y
      }
+
+     notifyAll({
+       type: 'add-player',
+       playerId,
+       playerX: x,
+       playerY: y
+     })
   }
 
   function removePlayer({ playerId }) {
     delete state.players[playerId]
+
+    notifyAll({
+      type: 'remove-player',
+      playerId
+    })
   }
 
   function movePlayer ({ keyPressed, playerId }) {
@@ -96,6 +120,7 @@ export function createGame () {
     removePlayer,
     movePlayer,
     addFruit,
-    removeFruit
+    removeFruit,
+    subscribe
   }
 }
