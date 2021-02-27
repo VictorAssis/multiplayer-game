@@ -10,7 +10,6 @@ const sockets = socketIo(server)
 app.use(express.static('../client'))
 
 const game = createGame()
-game.start()
 
 game.subscribe((command) => {
   console.log(`> Emitting ${command.type}`)
@@ -21,6 +20,9 @@ sockets.on('connection', (socket) => {
   const playerId = socket.id
   console.log(`> Player connected on Server with id: ${playerId}`)
   game.addPlayer({ playerId })
+  if (Object.values(game.state.players).length === 1) {
+    game.start()
+  }
 
   socket.emit('setup', game.state)
 
