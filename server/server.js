@@ -27,6 +27,12 @@ sockets.on('connection', (socket) => {
     game.removePlayer({ playerId })
     console.log(`> Player disconnected: ${playerId}`)
   })
+
+  socket.on('move-player', (command) => {
+    command.playerId = playerId
+    command.type = 'move-player'
+    game.movePlayer(command)
+  })
 })
 
 const port = process.env.port || 3000

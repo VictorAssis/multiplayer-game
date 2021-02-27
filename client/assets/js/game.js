@@ -56,7 +56,14 @@ export function createGame () {
     })
   }
 
-  function movePlayer ({ keyPressed, playerId }) {
+  function movePlayer (command) {
+    notifyAll(command)
+
+    const {
+      keyPressed,
+      playerId
+    } = command
+
     const acceptedKeys = {
       ArrowUp (player) {
         if (player.y - 1 >= 0) {
