@@ -51,6 +51,16 @@ function createGame () {
     const handleFunction = acceptedKeys[keyPressed]
     if (player && handleFunction) {
       handleFunction(player)
+      checkForFruitCollision(player)
+    }
+  }
+
+  function checkForFruitCollision (player) {
+    for (const fruitId in state.fruits) {
+      const fruit = state.fruits[fruitId]
+      if (player.x === fruit.x && player.y === fruit.y) {
+        removeFruit({ fruitId })
+      }
     }
   }
 
