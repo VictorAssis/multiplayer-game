@@ -4,7 +4,6 @@ import { renderScreen } from './render-screen.js'
 
 const game = createGame()
 const keyboardListener = createKeyboardListener(document)
-keyboardListener.subscribe(game.movePlayer)
 
 const screen = document.getElementById('screen')
 renderScreen(screen, game, requestAnimationFrame)
@@ -16,5 +15,9 @@ socket.on('connect', () => {
 })
 
 socket.on('setup', (state) => {
+  const playerId = socket.id
   game.setState(state)
+
+  keyboardListener.registerPlayerId(playerId)
+  keyboardListener.subscribe(game.movePlayer)
 })
