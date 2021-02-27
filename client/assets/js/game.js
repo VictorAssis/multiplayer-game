@@ -24,6 +24,11 @@ export function createGame () {
     Object.assign(state, newState)
   }
 
+  function start () {
+    const frequency = 2000
+    setInterval(addFruit, frequency)
+  }
+
   function addPlayer (command) {
     const {
       playerId,
@@ -104,16 +109,31 @@ export function createGame () {
   }
 
   function addFruit (command) {
+    if (!command) {
+      command = {}
+    }
     const {
       fruitId,
       fruitX,
       fruitY
-     } = command
+    } = command
 
-     state.fruits[fruitId] = {
-       x: fruitX,
-       y: fruitY
-     }
+    const maxId = 100000000000
+    const id = fruitId || Math.floor(Math.random() * maxId)
+    const x = fruitX || Math.floor(Math.random() * state.screen.width)
+    const y = fruitY || Math.floor(Math.random() * state.screen.height)
+
+    state.fruits[id] = {
+      x,
+      y
+    }
+
+    notifyAll({
+      type: 'add-fruit',
+      fruitId: id,
+      fruitX: x,
+      fruitY: y
+    })
   }
 
   function removeFruit({ fruitId }) {
@@ -123,6 +143,7 @@ export function createGame () {
   return {
     state,
     setState,
+    start,
     addPlayer,
     removePlayer,
     movePlayer,

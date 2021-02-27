@@ -39,3 +39,7 @@ socket.on('move-player', (command) => {
     game.movePlayer(command)
   }
 })
+
+socket.on('add-fruit', (command) => {
+  game.addFruit(command)
+})

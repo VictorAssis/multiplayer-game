@@ -10,6 +10,7 @@ const sockets = socketIo(server)
 app.use(express.static('../client'))
 
 const game = createGame()
+game.start()
 
 game.subscribe((command) => {
   console.log(`> Emitting ${command.type}`)
