@@ -1,15 +1,53 @@
 const screen = document.getElementById('screen')
 const context = screen.getContext('2d')
 
-const game = {
-  players: {
-    'player1': { x: 1, y: 1 },
-    'player2': { x: 9, y: 9}
-  },
-  fruits: {
-    'fruit1': { x: 3, y: 1 }
+function createGame () {
+  const state = {
+    players: {
+      'player1': { x: 1, y: 1 },
+      'player2': { x: 9, y: 9}
+    },
+    fruits: {
+      'fruit1': { x: 3, y: 1 }
+    }
+  }
+
+  function movePlayer ({ keyPressed, playerId }) {
+    const acceptedKeys = {
+      ArrowUp (player) {
+        if (player.y - 1 >= 0) {
+          player.y--
+        }
+      },
+      ArrowDown (player) {
+        if (player.y + 1 < screen.height) {
+          player.y++
+        }
+      },
+      ArrowLeft (player) {
+        if (player.x - 1 >= 0) {
+          player.x--
+        }
+      },
+      ArrowRight (player) {
+        if (player.x + 1 < screen.width) {
+          player.x++
+        }
+      }
+    }
+    const player = game.state.players[playerId]
+    const handleFunction = acceptedKeys[keyPressed]
+    if (handleFunction) {
+      handleFunction(player)
+    }
+  }
+
+  return {
+    state,
+    movePlayer
   }
 }
+const game = createGame()
 
 function createKeyboardListener () {
   const state = {
@@ -43,17 +81,18 @@ function createKeyboardListener () {
   }
 }
 const keyboardListener = createKeyboardListener()
+keyboardListener.subscribe(game.movePlayer)
 
 function renderScreen () {
   context.fillStyle = 'white'
   context.clearRect(0, 0, 10, 10)
-  for (const playerId in game.players) {
-    const player = game.players[playerId]
+  for (const playerId in game.state.players) {
+    const player = game.state.players[playerId]
     context.fillStyle = 'black'
     context.fillRect(player.x, player.y, 1, 1)
   }
-  for (const fruitId in game.fruits) {
-    const fruit = game.fruits[fruitId]
+  for (const fruitId in game.state.fruits) {
+    const fruit = game.state.fruits[fruitId]
     context.fillStyle = 'green'
     context.fillRect(fruit.x, fruit.y, 1, 1)
   }
