@@ -1,0 +1,13 @@
+* {
+  margin: 0;
+  padding: 0;
+  border: none;
+}
+#screen {
+  border: 10px solid #CCC;
+  image-rendering: pixelated;
+  image-rendering: crisp-edges;
+  image-rendering: -moz-crisp-edges;
+  width: 400px;
+  height: 400px;
+}
