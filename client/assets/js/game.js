@@ -8,6 +8,10 @@ export function createGame () {
     }
   }
 
+  function setState (newState) {
+    Object.assign(state, newState)
+  }
+
   function addPlayer (command) {
     const {
       playerId,
@@ -84,6 +88,7 @@ export function createGame () {
 
   return {
     state,
+    setState,
     addPlayer,
     removePlayer,
     movePlayer,

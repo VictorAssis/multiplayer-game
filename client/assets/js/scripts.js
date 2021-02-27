@@ -14,3 +14,7 @@ socket.on('connect', () => {
   const playerId = socket.id
   console.log(`Player connected on Client with id: ${playerId}`)
 })
+
+socket.on('setup', (state) => {
+  game.setState(state)
+})
