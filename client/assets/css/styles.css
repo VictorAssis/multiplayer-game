@@ -3,6 +3,9 @@
   padding: 0;
   border: none;
 }
+body {
+  display: flex;
+}
 #screen {
   border: 10px solid #CCC;
   image-rendering: pixelated;
@@ -10,4 +13,20 @@
   image-rendering: -moz-crisp-edges;
   width: 400px;
   height: 400px;
+  margin-right: 15px;
+}
+#results {
+  border: 1px solid #CCC;
+}
+#results th {
+  background-color: #BBB;
+  text-align: left;
+  padding: 5px;
+}
+#results td {
+  text-align: left;
+  padding: 5px;
+}
+#results .current-player td {
+  background-color: #F0DB4F;
 }
