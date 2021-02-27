@@ -9,6 +9,7 @@ export function createGame () {
   }
 
   const observers = []
+  let interval = null
 
   function subscribe (observerFunction) {
     observers.push(observerFunction)
@@ -25,8 +26,15 @@ export function createGame () {
   }
 
   function start () {
+    if (interval) return
     const frequency = 2000
-    setInterval(addFruit, frequency)
+    interval = setInterval(addFruit, frequency)
+  }
+
+  function stop () {
+    clearInterval(interval)
+    interval = null
+    state.fruits = {}
   }
 
   function addPlayer (command) {
@@ -149,6 +157,7 @@ export function createGame () {
     state,
     setState,
     start,
+    stop,
     addPlayer,
     removePlayer,
     movePlayer,

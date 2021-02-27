@@ -28,6 +28,9 @@ sockets.on('connection', (socket) => {
 
   socket.on('disconnect', () => {
     game.removePlayer({ playerId })
+    if (Object.values(game.state.players).length === 0) {
+      game.stop()
+    }
     console.log(`> Player disconnected: ${playerId}`)
   })
 
